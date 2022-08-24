@@ -1,0 +1,33 @@
+.container-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 10rem 10rem 10rem;
+}
+.img-wrapper {
+    width: 50%;
+    height: 100%;
+    margin: 10px;
+}
+
+.form-wrapper {
+    width: 50%;
+    height: 100%;
+    padding: 5rem 0 0 10px;
+
+}
+
+.img-wrapper img{
+    margin-top: 7rem;
+    border-radius: 10px;
+}
+
+.login-form {
+    padding: 0 3rem 0 3rem;
+    margin-left: 3rem;
+}
+
+.login-btn{
+    display: flex;
+    justify-content: space-between;
+}

@@ -1,0 +1,9 @@
+#nav-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+    background-color: rgb(76, 55, 15);
+
+}
