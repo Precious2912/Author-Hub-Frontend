@@ -43,7 +43,7 @@ export const Books = () => {
                 <div className="details">
                   <h3> Name: {name}</h3>
                   <p>
-                    isPublished: <span>{isPublished == '0' ? 'false' : 'true'}</span>
+                    isPublished: <span>{isPublished === '0' ? 'false' : 'true'}</span>
                   </p>
                   <p>
                     datePublished: <span>{datePublished}</span>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Dashboard } from "../../components/dashboard";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Footer } from "../../components/footer";
 import { Logo } from "../../components/logo";
 import { Button, Stack, Input, InputGroup } from "@chakra-ui/react";
@@ -47,6 +47,7 @@ export const DashboardPage = () => {
       }
     }
     )
+    console.log(response)
     alert('book added')
 
     setName("");

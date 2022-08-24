@@ -30,44 +30,45 @@ export const Dashboard = () => {
   const [datePublished, setDatePublished] = useState("");
   const [serialNumber, setSerialNumber] = useState("");
 
-  const token = localStorage.getItem("token");
+  // const token = localStorage.getItem("token");
 
-  const [editItem, setEditItem] = useState({
-    book: {},
-    edit: false,
-  });
-  const updateBook = async (id, updateBook) => {
-    const response = await axios.put(
-      `https://authorshub.herokuapp.com/books/create/${id}`,
-      { body: JSON.stringify(updateBook) },
-      {
-        method: "PUT",
-        headers: {
-          contentType: "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+  // const [editItem, setEditItem] = useState({
+  //   book: {},
+  //   edit: false,
+  // });
 
-    const data = await response.json();
-    setAuthor(
-      authors.map((author) => {
-        author.books.map((book) => {
-          return book.id === id ? { ...book, data } : book;
-        });
-      })
-    );
+  // const updateBook = async (id, updateBook) => {
+  //   const response = await axios.put(
+  //     `https://authorshub.herokuapp.com/books/create/${id}`,
+  //     // { body: JSON.stringify(updateBook) },
+  //     {
+  //       method: "PUT",
+  //       headers: {
+  //         contentType: "application/json",
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     }
+  //   );
 
-    // setName("");
-    // setIsPublished("");
-    // setDatePublished("");
-    // setSerialNumber("");
-  };
+  //   const data = await response.json();
+  //   setAuthor(
+  //     authors.map((author) => {
+  //       author.books.map((book) => {
+  //         return book.id === id ? { ...book, data } : book;
+  //       });
+  //     })
+  //   );
+
+  //   // setName("");
+  //   // setIsPublished("");
+  //   // setDatePublished("");
+  //   // setSerialNumber("");
+  // };
 
   // set books to updated
-  const editBook = (book) => {
-    setEditItem({ book: {}, edit: true });
-  };
+  // const editBook = (book) => {
+  //   setEditItem({ book: {}, edit: true });
+  // };
 
   return (
     <section className="dashboard-card">
@@ -86,7 +87,7 @@ export const Dashboard = () => {
                 <h3> Name: {book.name}</h3>
                 <p>
                   isPublished:{" "}
-                  <span>{book.isPublished == "0" ? "false" : "true"}</span>
+                  <span>{book.isPublished === "0" ? "false" : "true"}</span>
                 </p>
                 <p>
                   datePublished: <span>{book.datePublished}</span>
@@ -112,7 +113,7 @@ export const Dashboard = () => {
                   <Modal title="Edit Book" setShowModal={setShowModal}>
                     <Stack
                       spacing={4}
-                      onSubmit={editBook}
+                      // onSubmit={editBook}
                       className="register-form"
                     >
                       <InputGroup size="md">

@@ -1,6 +1,6 @@
-import React, { Children, useRef } from "react";
+import React, { useRef } from "react";
 import "./Modal.css";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import  ReactDOM  from "react-dom";
 
 export const Modal = ({ title, setShowModal, children }) => {
