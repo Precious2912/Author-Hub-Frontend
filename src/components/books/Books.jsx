@@ -37,10 +37,7 @@ export const Books = () => {
             <article key={index}>
               <div className="item">
                 <div className="image-style">
-                  <img
-                    src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
-                    alt="book"
-                  />
+                  <img src={book.imageURL} alt={book.name} />
                 </div>
                 <div className="details">
                   <h3> Name: {name}</h3>
