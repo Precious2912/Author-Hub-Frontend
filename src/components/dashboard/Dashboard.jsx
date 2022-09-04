@@ -3,6 +3,7 @@ import axios from "../../api/axios";
 import "./Dashboard.css";
 import { Modal } from "../modal/Modal";
 import { Button, Stack, Input, InputGroup } from "@chakra-ui/react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 export const Dashboard = () => {
   const [authors, setAuthor] = useState([]);
@@ -20,55 +21,118 @@ export const Dashboard = () => {
   }, []);
 
   const [showModal, setShowModal] = useState(false);
-  const toggleModal = () => setShowModal(!showModal);
-
-  // const [deleteModal, setDeleteModal] = useState(false);
-  // const toggleDeleteModal = () => setDeleteModal(!deleteModal);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [setError] = useState("");
 
   const [name, setName] = useState("");
   const [isPublished, setIsPublished] = useState("");
   const [datePublished, setDatePublished] = useState("");
   const [serialNumber, setSerialNumber] = useState("");
+  const [imageURL, setImageURL] = useState("");
 
-  // const token = localStorage.getItem("token");
+  const [setSuccess] = useState("");
 
-  // const [editItem, setEditItem] = useState({
-  //   book: {},
-  //   edit: false,
-  // });
+  let { id } = useParams();
 
-  // const updateBook = async (id, updateBook) => {
-  //   const response = await axios.put(
-  //     `https://authorshub.herokuapp.com/books/create/${id}`,
-  //     // { body: JSON.stringify(updateBook) },
-  //     {
-  //       method: "PUT",
-  //       headers: {
-  //         contentType: "application/json",
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     }
-  //   );
+  const token = localStorage.getItem("token");
 
-  //   const data = await response.json();
-  //   setAuthor(
-  //     authors.map((author) => {
-  //       author.books.map((book) => {
-  //         return book.id === id ? { ...book, data } : book;
-  //       });
-  //     })
-  //   );
+  const getBookById = async () => {
+    const response = await axios.get(
+      `https://authorshub.herokuapp.com/books/read/${id}`,
+      {
+        method: "GET",
+        headers: {
+          contentType: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
-  //   // setName("");
-  //   // setIsPublished("");
-  //   // setDatePublished("");
-  //   // setSerialNumber("");
-  // };
+    if (response.status === 200) {
+      setName(response.data.record.name);
+      setIsPublished(response.data.record.isPublished);
+      setDatePublished(response.data.record.datePublished);
+      setSerialNumber(response.data.record.serialNumber);
+      setImageURL(response.data.record.imageURL);
+    }
+    setError(response.data.message);
+  };
 
-  // set books to updated
-  // const editBook = (book) => {
-  //   setEditItem({ book: {}, edit: true });
-  // };
+  useEffect(() => {
+    getBookById();
+    // eslint-disable-next-line
+  }, [id]);
+
+  const editBook = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.put(
+        `https://authorshub.herokuapp.com/books/update/${id}`,
+        {
+          name: name,
+          isPublished: Boolean(isPublished),
+          datePublished: +datePublished,
+          serialNumber: +serialNumber,
+          imageURL: imageURL,
+        },
+        {
+          method: "PUT",
+          headers: {
+            contentType: "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setShowModal(false);
+
+      if (response.status === 202) {
+        setSuccess(response.data.msg);
+      }
+      window.location.reload(false);
+
+      setError(response.data.message);
+    } catch (err) {
+      console.log(err);
+      alert("failed to addbook");
+    }
+    setName("");
+    setIsPublished("");
+    setDatePublished("");
+    setSerialNumber("");
+    setImageURL("");
+  };
+
+  const navigate = useNavigate();
+  const removeBook = async (e) => {
+    try {
+      e.preventDefault();
+      const thisClicked = e.currentTarget;
+      thisClicked.innerText = "Deleting";
+      const response = await axios.delete(
+        `https://authorshub.herokuapp.com/books/delete/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            contentType: "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        thisClicked.closest("div").remove();
+        navigate("/dashboard");
+      }
+
+      thisClicked.innerText = "Delete";
+
+      setShowDeleteModal(!showDeleteModal);
+
+      window.location.reload(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <section className="dashboard-card">
@@ -76,12 +140,13 @@ export const Dashboard = () => {
         <>
           {/* loop over the books */}
           {author.books.map((book, i) => (
-            <div key={i} className="dashboard">
+            <div key={i + 1} className="dashboard">
               <div className="dashboard-image">
-                <img
+                {/* <img
                   src="https://images.unsplash.com/photo-1544716278-e513176f20b5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80"
                   alt="book"
-                />
+                /> */}
+                <img src="book.imageURL" alt="book" />
               </div>
               <article className="article">
                 <h3> Name: {book.name}</h3>
@@ -98,22 +163,27 @@ export const Dashboard = () => {
               </article>
 
               <div className="btn-grp">
-                <Button
-                  size="sm"
-                  height="30px"
-                  width="80px"
-                  border="2px"
-                  borderColor="rgb(76, 55, 15).500"
-                  onClick={toggleModal}
-                >
-                  Edit
-                </Button>
+                <Link to={`/dashboard/${book.id}`}>
+                  <Button
+                    size="sm"
+                    height="30px"
+                    width="80px"
+                    border="2px"
+                    borderColor="rgb(76, 55, 15).500"
+                    onClick={() => {
+                      setShowModal(!showModal);
+                      getBookById();
+                    }}
+                  >
+                    Edit
+                  </Button>
+                </Link>
 
                 {showModal ? (
                   <Modal title="Edit Book" setShowModal={setShowModal}>
                     <Stack
                       spacing={4}
-                      // onSubmit={editBook}
+                      onSubmit={editBook}
                       className="register-form"
                     >
                       <InputGroup size="md">
@@ -152,11 +222,22 @@ export const Dashboard = () => {
                       <InputGroup size="md">
                         <Input
                           pr="4.5rem"
-                          type="texf"
+                          type="text"
                           name="serialNumber"
                           value={serialNumber}
                           placeholder="Serial Number"
                           onChange={(e) => setSerialNumber(e.target.value)}
+                        />
+                      </InputGroup>
+
+                      <InputGroup size="md">
+                        <Input
+                          pr="4.5rem"
+                          type="text"
+                          name="imageURL"
+                          value={imageURL}
+                          placeholder="Image URL"
+                          onChange={(e) => setImageURL(e.target.value)}
                         />
                       </InputGroup>
 
@@ -167,7 +248,7 @@ export const Dashboard = () => {
                           width="100px"
                           border="1px"
                           borderColor="rgb(76, 55, 15).500"
-                          // onClick={editBook(book)}
+                          onClick={editBook}
                         >
                           Update
                         </Button>
@@ -175,25 +256,64 @@ export const Dashboard = () => {
                     </Stack>
                   </Modal>
                 ) : null}
+                <Link to={`/dashboard/${book.id}`}>
+                  <Button
+                    size="sm"
+                    height="30px"
+                    width="80px"
+                    border="2px"
+                    borderColor="rgb(76, 55, 15).500"
+                    type="submit"
+                    onClick={() =>
+                      setShowDeleteModal({ showDeleteModal: !showDeleteModal })
+                    }
+                  >
+                    Delete
+                  </Button>
+                </Link>
 
-                <Button
-                  size="sm"
-                  height="30px"
-                  width="80px"
-                  border="2px"
-                  borderColor="rgb(76, 55, 15).500"
-                  type="submit"
-                  // onClick={toggleDeleteModal}
-                  // onClick={handleLogin}
-                >
-                  Delete
-                </Button>
+                {showDeleteModal ? (
+                  <Modal
+                    title="Are you show you want to Delete?"
+                    setShowModal={setShowDeleteModal}
+                  >
+                    <Stack
+                      spacing={4}
+                      onSubmit={editBook}
+                      className="delete-book-modal"
+                    >
+                      <div className="delete-modal-btn">
+                      <Button
+                        size="sm"
+                        height="30px"
+                        width="80px"
+                        border="2px"
+                        className="cancel-delete"
+                        borderColor="rgb(76, 55, 15).500"
+                        type="submit"
+                        onClick={() => setShowDeleteModal(!showDeleteModal)}
+                      >
+                        Cancel
+                      </Button>
 
-                {/* {showModal ? (
-              <Modal title="Delete Book" setDeleteModal={setDeleteModal}>
-                <h1>Hello Delete</h1>
-              </Modal>
-            ) : null} */}
+                      <Link to={"/dashboard"}>
+                        <Button
+                          size="sm"
+                          height="30px"
+                          width="80px"
+                          border="2px"
+                          borderColor="rgb(76, 55, 15).500"
+                          type="submit"
+                          className="delete-book"
+                          onClick={(e) => removeBook(e)}
+                        >
+                          Delete
+                        </Button>
+                      </Link>
+                      </div>
+                    </Stack>
+                  </Modal>
+                ) : null}
               </div>
             </div>
           ))}

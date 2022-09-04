@@ -2,9 +2,11 @@ import React, { useRef } from "react";
 import "./Modal.css";
 // import PropTypes from "prop-types";
 import  ReactDOM  from "react-dom";
+import { useNavigate } from "react-router-dom";
 
 export const Modal = ({ title, setShowModal, children }) => {
   const modalRef = useRef();
+  const navigate = useNavigate()
   const closeModal = (e) => {
     if (e.target === modalRef.current) {
       setShowModal("false");

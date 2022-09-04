@@ -31,7 +31,7 @@ export const Home = () => {
 
   const subHero = {
     position: "absolute",
-    top: "70%",
+    top: "75%",
     left: "50%",
     transform: "translate(-50%, -50%)",
     textAlign: "center",
@@ -44,7 +44,7 @@ export const Home = () => {
     <NavBar link={"./register"} name={"Register"} link2={"./login"} name2={"Login"} />
     <div style={containerStyles}>
         <ImageSlider slides={slides} />
-        <h1 style={overlayStyle}>Welcome to Home Page</h1>
+        <h1 style={overlayStyle}>Author's Hub</h1>
         <h5 style={subHero}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h5>
     </div>
     <Footer />

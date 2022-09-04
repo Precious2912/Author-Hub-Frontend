@@ -20,7 +20,7 @@ export const BooksPage = () => {
 
   }
   const name = localStorage.getItem('author').toUpperCase()
-  const greeting = `${name}`
+  const greeting = `HI ${name}! 👋🏼 `
   return (
     <>
            <div id='nav-container'>

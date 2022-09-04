@@ -15,12 +15,34 @@ const BaseRoute = () => {
             <Route path='/' element={<Home />} />
             <Route path='/register' element={<RegisterPage />}></Route>
             <Route path='/login' element={<LoginPage />}></Route>
-            {/* <Route path='/dashboard' element={<DashboardPage />}></Route> */}
             {/* Protected Routes */}
-            <Route element={<ProtectedRoute />}>
-            <Route path='/dashboard' element={<DashboardPage />}></Route>
-            <Route path='/books' element={<BooksPage />}></Route>
-            </Route>
+            <Route   path='/dashboard' element={
+            <ProtectedRoute>
+               <DashboardPage/>
+            </ProtectedRoute>
+            
+            
+            }/>
+            <Route   path='/dashboard/:id' element={
+             <ProtectedRoute>
+             <DashboardPage/>
+          </ProtectedRoute>
+             }
+            
+            />
+            <Route   path='/books' element={
+            <ProtectedRoute>
+                <BooksPage/>
+            </ProtectedRoute>
+         
+        
+             }
+            />
+            {/* <Route element={<ProtectedRoute />}>
+                <Route path='/dashboard' element={<DashboardPage />}></Route>
+                <Route path='/dashboard/:id' element={<DashboardPage />}></Route>
+                <Route path='/books' element={<BooksPage />}></Route>
+            </Route> */}
 
             {/* Error Route */}
             <Route path='*' element={<Error />}></Route>

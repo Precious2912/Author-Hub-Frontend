@@ -22,44 +22,58 @@ export const DashboardPage = () => {
     removeLocalStorage("authenticated");
     window.location.href = "/login";
   };
-  const author = localStorage.getItem("author").toUpperCase();
-  const greeting = `Welcome ${author}!`;
+
+
+  const authorName = localStorage.getItem('author').toUpperCase()
+  const greeting = `HI ${authorName}! 👋🏼 `
 
   const [name, setName] = useState("")
   const [isPublished, setIsPublished] = useState("")
   const [datePublished, setDatePublished] = useState("")
   const [serialNumber, setSerialNumber] = useState("")
+  const [imageURL, setImageURL] = useState("")
 
 
   const token = localStorage.getItem("token");
 
   const addBook = async () => {
-    const response = await axios.post("https://authorshub.herokuapp.com/books/create", {
-      name: name,
-      isPublished: Boolean(isPublished),
-      datePublished: +datePublished,
-      serialNumber: +serialNumber
-    }, {
-      method: "POST",
-      headers: {
-        contentType: "application/json",
-        Authorization: `Bearer ${token}`,
+    try {
+      const response = await axios.post("https://authorshub.herokuapp.com/books/create", {
+        name: name,
+        isPublished: Boolean(isPublished),
+        datePublished: +datePublished,
+        serialNumber: +serialNumber,
+        imageURL: imageURL
+      }, {
+        method: "POST",
+        headers: {
+          contentType: "application/json",
+          Authorization: `Bearer ${token}`,
+        }
       }
+      )
+
+      console.log(response)
+      setShowModal(false)
+      window.location.reload(false);
+     
     }
-    )
-    console.log(response)
-    alert('book added')
+    catch(err) {
+      console.log(err)
+      alert('failed to addbook')
+    }
 
     setName("");
     setIsPublished("");
     setDatePublished("");
     setSerialNumber("");
+    setImageURL("")
   };
 
   return (
     <>
       <div id="nav-container">
-        <Logo author={greeting} />
+        <Logo name={greeting} />
         <Stack direction="row" spacing={4} align="center">
           <Button colorScheme="orange" variant="solid" onClick={toggleModal}>
             Add a book
@@ -110,11 +124,22 @@ export const DashboardPage = () => {
                 <InputGroup size="md">
                   <Input
                     pr="4.5rem"
-                    type="texf"
+                    type="text"
                     name="serialNumber"
                     value={serialNumber}
                     placeholder="Serial Number"
                     onChange={(e) => setSerialNumber(e.target.value)}
+                  />
+                </InputGroup>
+
+                <InputGroup size="md">
+                  <Input
+                    pr="4.5rem"
+                    type="text"
+                    name="imageURL"
+                    value={imageURL}
+                    placeholder="Image URL"
+                    onChange={(e) => setImageURL(e.target.value)}
                   />
                 </InputGroup>
 

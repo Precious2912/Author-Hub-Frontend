@@ -43,10 +43,11 @@ export const Login = () => {
         const token = res.data.token;
 
         if (token) {
-          console.log("account");
+          localStorage.setItem('authenticated', true)
           localStorage.setItem('author', author)
           localStorage.setItem("token", token);
           localStorage.setItem("id", id);
+          window.location.pathname = "/dashboard"
         }
         login(author, id, token);
 
@@ -66,15 +67,15 @@ export const Login = () => {
   };
 
   return (
-    <div className="container-wrapper">
-      <div className="img-wrapper">
+    <div className="login-page-container">
+      <div className="img-container-login">
         <img
           src="https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
           alt="Login"
         ></img>
       </div>
-      <div className="form-wrapper">
-        <Stack spacing={4} className="login-form">
+      <div className="form-container-login">
+        <Stack spacing={4}>
           <InputGroup size="md">
             <Input
               pr="4.5rem"

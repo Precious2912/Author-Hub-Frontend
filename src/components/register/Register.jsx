@@ -53,12 +53,12 @@ const clear = () => {
 
 
   return (
-    <div className="container">
-      <div className="img-container">
+    <div className="register-page-container">
+      <div className="img-container-register">
         <img src="https://images.unsplash.com/photo-1505330622279-bf7d7fc918f4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="Sign Up"></img>
       </div>
-      <div className="form-container">
-      <Stack spacing={4} onSubmit={handleRegister} className='register-form'>
+      <div className="form-container-register">
+      <Stack spacing={4} onSubmit={handleRegister}>
         <InputGroup size="md">
           <Input
             pr="4.5rem"
