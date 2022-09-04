@@ -23,51 +23,50 @@ export const DashboardPage = () => {
     window.location.href = "/login";
   };
 
+  const authorName = localStorage.getItem("author").toUpperCase();
+  const greeting = `HI ${authorName}! 👋🏼 `;
 
-  const authorName = localStorage.getItem('author').toUpperCase()
-  const greeting = `HI ${authorName}! 👋🏼 `
-
-  const [name, setName] = useState("")
-  const [isPublished, setIsPublished] = useState("")
-  const [datePublished, setDatePublished] = useState("")
-  const [serialNumber, setSerialNumber] = useState("")
-  const [imageURL, setImageURL] = useState("")
-
+  const [name, setName] = useState("");
+  const [isPublished, setIsPublished] = useState("");
+  const [datePublished, setDatePublished] = useState("");
+  const [serialNumber, setSerialNumber] = useState("");
+  const [imageURL, setImageURL] = useState("");
 
   const token = localStorage.getItem("token");
 
   const addBook = async () => {
     try {
-      const response = await axios.post("https://authorshub.herokuapp.com/books/create", {
-        name: name,
-        isPublished: Boolean(isPublished),
-        datePublished: +datePublished,
-        serialNumber: +serialNumber,
-        imageURL: imageURL
-      }, {
-        method: "POST",
-        headers: {
-          contentType: "application/json",
-          Authorization: `Bearer ${token}`,
+      const response = await axios.post(
+        "https://authorshub.herokuapp.com/books/create",
+        {
+          name: name,
+          isPublished: Boolean(isPublished),
+          datePublished: +datePublished,
+          serialNumber: +serialNumber,
+          imageURL: imageURL,
+        },
+        {
+          method: "POST",
+          headers: {
+            contentType: "application/json",
+            Authorization: `Bearer ${token}`,
+          },
         }
-      }
-      )
+      );
 
-      console.log(response)
-      setShowModal(false)
+      console.log(response);
+      setShowModal(false);
       window.location.reload(false);
-     
-    }
-    catch(err) {
-      console.log(err)
-      alert('failed to addbook')
+    } catch (err) {
+      console.log(err);
+      alert("failed to addbook");
     }
 
     setName("");
     setIsPublished("");
     setDatePublished("");
     setSerialNumber("");
-    setImageURL("")
+    setImageURL("");
   };
 
   return (

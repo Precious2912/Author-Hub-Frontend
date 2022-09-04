@@ -15,13 +15,12 @@ import axios from "../../api/axios";
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [loginError, setLoginError] = useState("");
-
-  const navigate = useNavigate();
-  const { login, loggedIn } = UseAuth();
 
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
+
+  const navigate = useNavigate();
+  const { login, loggedIn } = UseAuth();
 
   useEffect(() => {
     if (loggedIn) {
@@ -43,18 +42,16 @@ export const Login = () => {
         const token = res.data.token;
 
         if (token) {
-          localStorage.setItem('authenticated', true)
-          localStorage.setItem('author', author)
+          localStorage.setItem("authenticated", true);
+          localStorage.setItem("author", author);
           localStorage.setItem("token", token);
           localStorage.setItem("id", id);
-          window.location.pathname = "/dashboard"
+          window.location.pathname = "/dashboard";
         }
         login(author, id, token);
-
-        console.log(login);
       })
       .catch((err) => {
-        console.log("--------err" + err);
+        console.log(err);
       });
 
     setEmail("");
@@ -135,8 +132,6 @@ export const Login = () => {
           </div>
         </Stack>
       </div>
-
-      {/* </form> */}
     </div>
   );
 };

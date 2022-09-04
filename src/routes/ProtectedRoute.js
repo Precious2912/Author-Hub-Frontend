@@ -1,35 +1,15 @@
-import React from 'react'
-import {useLocation, Navigate, Outlet, Route} from 'react-router-dom'
-import useAuth from '../hooks/UseAuth'
+import React from "react";
+import { useLocation, Navigate } from "react-router-dom";
 
-function  ProtectedRoute({children}) {
-     const location = useLocation()
-    // const {loggedIn} = useAuth();
-    const isAuthenticated = localStorage.getItem("authenticated")
-    
-  // return loggedIn ? (
-  //   <Outlet /> 
-  // ) : (
-  //   <Navigate to='login' state={{from: location}} replace/>
-  // )
+const ProtectedRoute = ({ children }) => {
+  const location = useLocation();
+  const isAuthenticated = localStorage.getItem("authenticated");
 
-  if(!isAuthenticated){
-    return   <Navigate to='/login' state={{from: location}} replace/>
+  if (!isAuthenticated) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  return children
-   
+  return children;
+};
 
-  // return (
-  //   <Route
-  //   {...restOfProps}
-  //   render={(props) => 
-  //     isAuthenticated ? <Component {...props} /> : <Navigate to='login'/>
-  //   }
-
-  //   />
-  // )
-    
-}
-
-export default ProtectedRoute
+export default ProtectedRoute;

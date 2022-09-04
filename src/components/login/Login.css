@@ -1,28 +1,26 @@
 .login-page-container {
-    display: flex;
-    justify-content: space-between;
-    height: 100%;
-    align-items: center;
-    padding: 2rem;
-    margin: 2rem;
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+  align-items: center;
+  padding: 2rem;
+  margin: 2rem;
 }
 .img-container-login {
-    width: 50%;
-    /* height: 100%; */
-    margin: 2rem;
+  width: 50%;
+  margin: 2rem;
 }
 
 .form-container-login {
-    width: 40%;
-    /* height: 100%; */
+  width: 40%;
 }
 
-img{
-    border: 1px solid;
-    border-radius: 10px;
+img {
+  border: 1px solid;
+  border-radius: 10px;
 }
 
-.login-btn{
-    display: flex;
-    justify-content: space-between;
+.login-btn {
+  display: flex;
+  justify-content: space-between;
 }

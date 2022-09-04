@@ -1,35 +1,34 @@
 .register-page-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 2rem;
-    margin: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+  margin: 2rem;
 }
 .img-container-register {
-    width: 50%;
-    height: 100%;
-    margin: 2rem;
+  width: 50%;
+  height: 100%;
+  margin: 2rem;
 }
 
-img{
-    border: 1px solid;
-    border-radius: 10px;
+img {
+  border: 1px solid;
+  border-radius: 10px;
 }
-
 
 .form-container-register {
-    width: 40%;
-    height: 100%;
+  width: 40%;
+  height: 100%;
 }
 
-.link-style{
-    background-color: rgb(76, 55, 15);
-    color: #fff;
-    border-radius: 0.8rem;
-    padding: 0.5rem;
+.link-style {
+  background-color: rgb(76, 55, 15);
+  color: #fff;
+  border-radius: 0.8rem;
+  padding: 0.5rem;
 }
 
-.btn{
-    display: flex;
-    justify-content: space-between;
+.btn {
+  display: flex;
+  justify-content: space-between;
 }

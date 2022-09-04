@@ -16,6 +16,8 @@ export const Dashboard = () => {
     setAuthor(response.data.record);
   };
 
+  console.log(authors);
+
   useEffect(() => {
     getAuthor();
   }, []);
@@ -87,10 +89,10 @@ export const Dashboard = () => {
 
       if (response.status === 202) {
         setSuccess(response.data.msg);
+        window.location.reload(false);
+      } else {
+        setError(response.data.message);
       }
-      window.location.reload(false);
-
-      setError(response.data.message);
     } catch (err) {
       console.log(err);
       alert("failed to addbook");
@@ -142,11 +144,7 @@ export const Dashboard = () => {
           {author.books.map((book, i) => (
             <div key={i + 1} className="dashboard">
               <div className="dashboard-image">
-                {/* <img
-                  src="https://images.unsplash.com/photo-1544716278-e513176f20b5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80"
-                  alt="book"
-                /> */}
-                <img src="book.imageURL" alt="book" />
+                <img src={book.imageURL} alt={book.name} />
               </div>
               <article className="article">
                 <h3> Name: {book.name}</h3>
@@ -283,33 +281,33 @@ export const Dashboard = () => {
                       className="delete-book-modal"
                     >
                       <div className="delete-modal-btn">
-                      <Button
-                        size="sm"
-                        height="30px"
-                        width="80px"
-                        border="2px"
-                        className="cancel-delete"
-                        borderColor="rgb(76, 55, 15).500"
-                        type="submit"
-                        onClick={() => setShowDeleteModal(!showDeleteModal)}
-                      >
-                        Cancel
-                      </Button>
-
-                      <Link to={"/dashboard"}>
                         <Button
                           size="sm"
                           height="30px"
                           width="80px"
                           border="2px"
+                          className="cancel-delete"
                           borderColor="rgb(76, 55, 15).500"
                           type="submit"
-                          className="delete-book"
-                          onClick={(e) => removeBook(e)}
+                          onClick={() => setShowDeleteModal(!showDeleteModal)}
                         >
-                          Delete
+                          Cancel
                         </Button>
-                      </Link>
+
+                        <Link to={"/dashboard"}>
+                          <Button
+                            size="sm"
+                            height="30px"
+                            width="80px"
+                            border="2px"
+                            borderColor="rgb(76, 55, 15).500"
+                            type="submit"
+                            className="delete-book"
+                            onClick={(e) => removeBook(e)}
+                          >
+                            Delete
+                          </Button>
+                        </Link>
                       </div>
                     </Stack>
                   </Modal>
