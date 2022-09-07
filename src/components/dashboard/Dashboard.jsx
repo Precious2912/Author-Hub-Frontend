@@ -24,15 +24,12 @@ export const Dashboard = () => {
 
   const [showModal, setShowModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [setError] = useState("");
 
   const [name, setName] = useState("");
   const [isPublished, setIsPublished] = useState("");
   const [datePublished, setDatePublished] = useState("");
   const [serialNumber, setSerialNumber] = useState("");
   const [imageURL, setImageURL] = useState("");
-
-  const [setSuccess] = useState("");
 
   let { id } = useParams();
 
@@ -57,7 +54,6 @@ export const Dashboard = () => {
       setSerialNumber(response.data.record.serialNumber);
       setImageURL(response.data.record.imageURL);
     }
-    setError(response.data.message);
   };
 
   useEffect(() => {
@@ -88,15 +84,14 @@ export const Dashboard = () => {
       setShowModal(false);
 
       if (response.status === 202) {
-        setSuccess(response.data.msg);
         window.location.reload(false);
-      } else {
-        setError(response.data.message);
       }
+
     } catch (err) {
       console.log(err);
-      alert("failed to addbook");
     }
+
+      window.location.reload(false);
     setName("");
     setIsPublished("");
     setDatePublished("");
